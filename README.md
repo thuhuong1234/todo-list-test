@@ -6,7 +6,7 @@ Xây dựng ứng dụng **To-do List** gồm frontend (Vue.js), backend (Node.j
 
 ## 🧱 Yêu cầu kỹ thuật
 
-- **Frontend:** Vue3
+- **Frontend:** Vue3 (ưu tiên) hoặc tuỳ chọn
 - **Backend:** Node.js + Express
 - **Database:** MySQL
 - **API giao tiếp:** RESTful (sử dụng Axios để gọi API)
