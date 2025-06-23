@@ -27,7 +27,24 @@ async function createTodo(req, res) {
     });
   }
 }
+
+async function updateTodo(req, res) {
+  try {
+    const todo = await todosModel.updateTodo(req.params.id, req.body, res);
+    res.status(200).json({
+      message: "Todo updated successfully",
+      todo: todo,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating todo",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getTodos,
   createTodo,
+  updateTodo,
 };

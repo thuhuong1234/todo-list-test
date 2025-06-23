@@ -6,8 +6,12 @@ function getTodos() {
 function createTodo(todo) {
   return db.table("todos").insert(todo);
 }
+function updateTodo(id, todo) {
+  return db.table("todos").where({ id }).update(todo);
+}
 
 module.exports = {
   getTodos,
   createTodo,
+  updateTodo,
 };
