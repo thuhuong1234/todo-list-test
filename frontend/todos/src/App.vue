@@ -1,10 +1,12 @@
 <script setup>
 import AppHeader from "@/components/AppHeader.vue";
+import AppMain from "@/components/AppMain.vue";
 </script>
 
 <template>
   <div class="todo-list-dashboard">
     <AppHeader />
+    <AppMain />
   </div>
 
 </template>
