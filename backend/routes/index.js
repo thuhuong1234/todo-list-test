@@ -12,6 +12,6 @@ router.put(
   validate(updateTodoSchema),
   todosController.updateTodo
 );
-// router.delete('/todos/:id')
+router.delete("/todos/:id", todosController.deleteTodo);
 
 module.exports = router;

@@ -9,9 +9,13 @@ function createTodo(todo) {
 function updateTodo(id, todo) {
   return db.table("todos").where({ id }).update(todo);
 }
+function deleteTodo(id) {
+  return db.table("todos").where({ id }).del();
+}
 
 module.exports = {
   getTodos,
   createTodo,
   updateTodo,
+  deleteTodo,
 };
