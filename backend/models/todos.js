@@ -1,7 +1,7 @@
 const db = require("../db");
 
 function getTodos() {
-  return db.table("todos").select("*");
+  return db.table("todos");
 }
 function createTodo(todo) {
   return db.table("todos").insert(todo);

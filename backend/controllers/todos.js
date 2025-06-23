@@ -1,10 +1,39 @@
 const todosModel = require("../models/todos");
 async function getTodos(req, res) {
   try {
-    const todos = await todosModel.getTodos(req, res);
+    const { is_completed, page = 1, limit = 10, search = "" } = req.query;
+    const offset = (page - 1) * limit;
+    let todos = todosModel.getTodos();
+
+    if (is_completed === "0" || is_completed === "1") {
+      todos = todos.where("is_completed", parseInt(is_completed));
+    }
+    if (search) {
+      todos = todos.andWhere(function () {
+        this.where("title", "like", `%${search}%`).orWhere(
+          "description",
+          "like",
+          `%${search}%`
+        );
+      });
+    }
+
+    const result = todos
+      .clone()
+      .select("*")
+      .limit(limit)
+      .offset(offset)
+      .orderBy("due_date", "asc");
+    const total = todos.clone().count("* as total");
+
+    const [data, totalResult] = await Promise.all([result, total]);
+
     res.status(200).json({
       message: "Todos fetched successfully",
-      todos: todos,
+      todos: data,
+      total: totalResult[0].total,
+      page: parseInt(page),
+      limit: parseInt(limit),
     });
   } catch (error) {
     res.status(500).json({
