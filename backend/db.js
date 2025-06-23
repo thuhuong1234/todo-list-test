@@ -1,13 +1,14 @@
-const knex = require('knex') ({
-    client: 'mysql2',
-    // debug: true,
-    connection: {
-        host: '104.161.49.14',
-        port: 28138,
-        user: 'levtest',
-        password: 'Levcloud2025@@',
-        database: 'Lev_test_db'
-    }
-})
+require("dotenv").config();
+const knex = require("knex")({
+  client: "mysql2",
+  // debug: true,
+  connection: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  },
+});
 
-module.exports = knex
+module.exports = knex;
