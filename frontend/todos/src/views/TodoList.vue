@@ -7,6 +7,7 @@
                     <div class="btn"> <img src="@/assets/images/32-c-add-3.svg" alt="Add"> Thêm công việc</div>
                 </template>
             </page-header>
+            <todo-list :todos="todos" />
         </div>
     </default-layout>
 </template>
@@ -14,6 +15,22 @@
 <script setup>
 import DefaultLayout from '@/DefaultLayout.vue';
 import PageHeader from '@/components/PageHeader.vue';
+import TodoList from '@/views/components/TodoList.vue';
+import { onMounted, ref } from 'vue';
+import axios from '@/configs/axios';
+
+const todos = ref([]);
+const getTodos = async () => {
+    try {
+        const response = await axios.get("/todos");
+        todos.value = response.data.todos;
+    } catch (error) {
+        console.error("Lỗi:", error);
+    }
+}
+onMounted(() => {
+    getTodos();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -31,5 +48,4 @@ import PageHeader from '@/components/PageHeader.vue';
     gap: 10px;
     cursor: pointer;
 }
-
 </style>
