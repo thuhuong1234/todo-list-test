@@ -42,6 +42,20 @@ async function getTodos(req, res) {
     });
   }
 }
+async function getTodoById(req, res) {
+  try {
+    const todo = await todosModel.getTodoById(req.params.id);
+    if (!todo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    res.status(200).json(todo);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching todo",
+      error: error.message,
+    });
+  }
+}
 async function createTodo(req, res) {
   try {
     const todo = await todosModel.createTodo(req.body, res);
@@ -87,6 +101,7 @@ async function deleteTodo(req, res) {
 
 module.exports = {
   getTodos,
+  getTodoById,
   createTodo,
   updateTodo,
   deleteTodo,

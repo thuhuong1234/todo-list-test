@@ -7,6 +7,7 @@ const validate = require("../middlewares/validate");
 
 router.get("/todos", todosController.getTodos);
 router.post("/todos", validate(createTodoSchema), todosController.createTodo);
+router.get("/todos/:id", todosController.getTodoById);
 router.put(
   "/todos/:id",
   validate(updateTodoSchema),

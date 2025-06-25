@@ -3,6 +3,9 @@ const db = require("../db");
 function getTodos() {
   return db.table("todos");
 }
+function getTodoById(id) {
+  return db.table("todos").where({ id });
+}
 function createTodo(todo) {
   return db.table("todos").insert(todo);
 }
@@ -15,6 +18,7 @@ function deleteTodo(id) {
 
 module.exports = {
   getTodos,
+  getTodoById,
   createTodo,
   updateTodo,
   deleteTodo,
