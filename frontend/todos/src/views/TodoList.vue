@@ -11,15 +11,21 @@
             <div class="line"> </div>
             <div class="toolbar">
                 <div class="search-bar"> <img width="20px" src="@/assets/images/32-zoom-3.svg" alt="Search">
-                    <input type="text" v-model="search" @keyup.enter="page = 1; getTodos()" placeholder="Tìm kiếm..." />
+                    <input type="text" v-model="search" @input="handleSearchInput" placeholder="Tìm kiếm..." />
                 </div>
-
+                <select v-model="isCompleted" @change="page = 1; getTodos()">
+                    <option selected value="">Tất cả</option>
+                    <option value="0">Chưa hoàn thành</option>
+                    <option value="1">Đã hoàn thành</option>
+                </select>
             </div>
             <todo-list :todos="todos" @edit="handleEdit" @delete="handleDelete" />
             <div class="pagination">
-                <button :disabled="page === 1" @click="page--; getTodos()">«</button>
+                <button :disabled="page === 1" @click="page--; getTodos()"><img src='@/assets/images/24-left-arrow.svg'
+                        alt="Previous"></button>
                 <span>Trang {{ page }} / {{ totalPages }}</span>
-                <button :disabled="page >= totalPages" @click="page++; getTodos()">»</button>
+                <button :disabled="page >= totalPages" @click="page++; getTodos()"><img
+                        src='@/assets/images/24-right-arrow.svg' alt="Previous"></button>
             </div>
         </div>
     </default-layout>
@@ -33,7 +39,7 @@ import { onMounted, ref, computed, watch } from 'vue';
 import axios from '@/configs/axios';
 import { useRouter } from 'vue-router';
 import { showToast, showConfirmDialog } from '@/helpers/sweetalertHelper.js';
-
+import { debounce } from 'lodash';
 const router = useRouter();
 
 const todos = ref([]);
@@ -42,13 +48,15 @@ const page = ref(1);
 const limit = ref(6);
 const search = ref("");
 const totalPages = computed(() => Math.ceil(total.value / limit.value));
+const isCompleted = ref("");
 const getTodos = async () => {
     try {
         const response = await axios.get("/todos", {
             params: {
                 page: page.value,
                 limit: limit.value,
-                search: search.value
+                search: search.value,
+                is_completed: isCompleted.value
             }
         });
         todos.value = response.data.todos;
@@ -71,6 +79,11 @@ const handleDelete = async (id) => {
         console.error("Lỗi:", error);
     }
 }
+const handleSearchInput = debounce(() => {
+    page.value = 1;
+    getTodos();
+}, 100);
+
 watch([page, limit], () => {
     getTodos();
 });
@@ -129,6 +142,9 @@ onMounted(() => {
 
 .toolbar {
     padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .search-bar {
         display: flex;
@@ -144,6 +160,12 @@ onMounted(() => {
         width: 100%;
         padding: 10px;
         border: none;
+    }
+
+    select {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
     }
 }
 </style>
