@@ -8,7 +8,7 @@
                         việc</div>
                 </template>
             </page-header>
-            <todo-list :todos="todos" @edit="handleEdit" />
+            <todo-list :todos="todos" @edit="handleEdit" @delete="handleDelete" />
         </div>
     </default-layout>
 </template>
@@ -20,6 +20,7 @@ import TodoList from '@/views/components/TodoList.vue';
 import { onMounted, ref } from 'vue';
 import axios from '@/configs/axios';
 import { useRouter } from 'vue-router';
+import { showToast, showConfirmDialog } from '@/helpers/sweetalertHelper.js';
 
 const router = useRouter();
 
@@ -35,7 +36,17 @@ const getTodos = async () => {
 const reload = () => window.location.reload();
 const createTodo = () => router.push({ name: "new-todo" });
 const handleEdit = (id) => router.push({ name: "edit-todo", params: { id } });
-
+const handleDelete = async (id) => {
+    try {
+        const confirm = await showConfirmDialog("Xóa", "Bạn có chắc chắn muốn xóa");
+        if (!confirm) return;
+        await axios.delete(`/todos/${id}`);
+        showToast("Xóa công việc", "success");
+        getTodos();
+    } catch (error) {
+        console.error("Lỗi:", error);
+    }
+}
 onMounted(() => {
     getTodos();
 })

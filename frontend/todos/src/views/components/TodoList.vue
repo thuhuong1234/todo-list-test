@@ -8,7 +8,7 @@ const props = defineProps({
     }
 })
 const formatDate = (date) => new Date(date).toLocaleDateString();
-const emit = defineEmits(['edit']);
+const emit = defineEmits(['edit', 'delete']);
 </script>
 
 <template>
@@ -20,10 +20,10 @@ const emit = defineEmits(['edit']);
                         {{ todo.is_completed ? 'Đã hoàn thành' : 'Chưa hoàn thành' }}
                     </span>
                     <div class="actions">
-                        <button class="btn btn-edit" @click="$emit('edit', todo.id)"> <img
-                                src="@/assets/images/32-edit-3.svg" alt="Edit"></button>
-                        <button class="btn btn-delete"><img src="@/assets/images/32-trash-can-3.svg"
-                                alt="Delete"></button>
+                        <button class="btn btn-edit" @click="$emit('edit', todo.id)">
+                            <img src="@/assets/images/32-edit-3.svg" alt="Edit"></button>
+                        <button class="btn btn-delete" @click="$emit('delete', todo.id)">
+                            <img src=" @/assets/images/32-trash-can-3.svg" alt="Delete"></button>
                     </div>
                 </div>
                 <p class="title" :class="{ completed: todo.is_completed, pending: !todo.is_completed }">Công việc: {{
