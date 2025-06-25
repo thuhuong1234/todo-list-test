@@ -7,6 +7,11 @@ const router = createRouter({
       name: "default",
       component: () => import("@/views/TodoList.vue"),
     },
+    {
+      path: "/new-todo",
+      name: "new-todo",
+      component: () => import("@/views/NewTodo.vue"),
+    },
   ],
 });
 

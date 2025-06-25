@@ -3,8 +3,9 @@
         <div class="container">
             <page-header title="Danh sách công việc">
                 <template #btn>
-                    <div class="btn"> <img src="@/assets/images/32-reload-3.svg" alt="Reload"></div>
-                    <div class="btn"> <img src="@/assets/images/32-c-add-3.svg" alt="Add"> Thêm công việc</div>
+                    <div class="btn" @click="reload"> <img src="@/assets/images/32-reload-3.svg" alt="Reload"></div>
+                    <div class="btn" @click="createTodo"> <img src="@/assets/images/32-c-add-3.svg" alt="Add"> Thêm công
+                        việc</div>
                 </template>
             </page-header>
             <todo-list :todos="todos" />
@@ -18,6 +19,9 @@ import PageHeader from '@/components/PageHeader.vue';
 import TodoList from '@/views/components/TodoList.vue';
 import { onMounted, ref } from 'vue';
 import axios from '@/configs/axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const todos = ref([]);
 const getTodos = async () => {
@@ -28,6 +32,9 @@ const getTodos = async () => {
         console.error("Lỗi:", error);
     }
 }
+const reload = () => window.location.reload();
+const createTodo = () => router.push('/new-todo');
+
 onMounted(() => {
     getTodos();
 })
