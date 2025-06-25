@@ -19,9 +19,10 @@
 
 <style lang="scss" scoped>
 .app-footer {
+    bottom: 0;
     background-color: #f8f9fa;
     border-top: 1px solid #ddd;
-    padding: 20px 40px;
+    padding: 5px 40px;
 
     .footer-content {
         display: flex;

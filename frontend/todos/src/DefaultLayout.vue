@@ -17,7 +17,14 @@ import AppFooter from '@/components/Footer.vue';
 <style lang="scss" scoped>
 .default-layout {
     width: 100%;
-    height: 100vh;
     background: linear-gradient(#003DA1, #a2d6ec);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .app-main {
+        flex: 1;
+    }
 }
 </style>
