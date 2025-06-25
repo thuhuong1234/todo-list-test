@@ -33,7 +33,7 @@ const getTodos = async () => {
     }
 }
 const reload = () => window.location.reload();
-const createTodo = () => router.push('/new-todo');
+const createTodo = () => router.push({ name: "new-todo" });
 
 onMounted(() => {
     getTodos();

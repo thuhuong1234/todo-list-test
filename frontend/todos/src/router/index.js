@@ -8,7 +8,7 @@ const router = createRouter({
       component: () => import("@/views/TodoList.vue"),
     },
     {
-      path: "/new-todo",
+      path: "/todos/new",
       name: "new-todo",
       component: () => import("@/views/NewTodo.vue"),
     },

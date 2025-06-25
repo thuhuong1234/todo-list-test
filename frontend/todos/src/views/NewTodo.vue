@@ -19,6 +19,8 @@
 import DefaultLayout from '@/DefaultLayout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import TodoForm from '@/views/components/TodoForm.vue';
+import { showToast } from '@/helpers/sweetalertHelper.js';
+
 import axios from '@/configs/axios';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
@@ -43,11 +45,9 @@ const { handleSubmit, resetForm, values, errors } = useForm({
 });
 const onSubmit = handleSubmit(async (values) => {
   try {
-    console.log(values);
-
     const response = await axios.post("/todos", values);
     if (response.data) {
-      console.log("Todo created successfully");
+      showToast("Thêm công việc mô tả", "success");
     }
     resetForm();
   } catch (error) {
