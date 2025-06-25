@@ -1,19 +1,23 @@
 <script setup>
 import { useField } from 'vee-validate';
 
+const props = defineProps({
+    isEdit: { type: Boolean, default: false }
+})
 const emit = defineEmits(['save', 'cancel']);
 
 const { value: title, errorMessage: titleError } = useField('title');
 const { value: dueDate, errorMessage: dueDateError } = useField('due_date');
 const { value: description } = useField('description');
 const { value: isCompleted } = useField('is_completed');
+
 </script>
 
 <template>
     <div class="todo-form">
         <div class="title">
             <img width="20px" src="@/assets/images/32-c-warning-3.svg" alt="Add" />
-            Thêm công việc
+            {{ isEdit ? 'Chỉnh sửa công việc' : 'Thêm công việc' }}
         </div>
 
         <form @submit.prevent="emit('save')">

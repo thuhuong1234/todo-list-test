@@ -21,7 +21,7 @@ const showConfirmDialog = async (title, text) => {
   return result.isConfirmed;
 };
 
-const showToast = (title, icon = "success", text = "", timer = 3000) => {
+const showToast = (title, icon = "success", text = "", timer = 1000) => {
   return Swal.fire({
     title,
     text,

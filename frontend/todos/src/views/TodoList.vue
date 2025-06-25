@@ -8,7 +8,7 @@
                         việc</div>
                 </template>
             </page-header>
-            <todo-list :todos="todos" />
+            <todo-list :todos="todos" @edit="handleEdit" />
         </div>
     </default-layout>
 </template>
@@ -34,6 +34,7 @@ const getTodos = async () => {
 }
 const reload = () => window.location.reload();
 const createTodo = () => router.push({ name: "new-todo" });
+const handleEdit = (id) => router.push({ name: "edit-todo", params: { id } });
 
 onMounted(() => {
     getTodos();

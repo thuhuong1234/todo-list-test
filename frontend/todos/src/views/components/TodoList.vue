@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
     todos: {
@@ -8,6 +8,7 @@ const props = defineProps({
     }
 })
 const formatDate = (date) => new Date(date).toLocaleDateString();
+const emit = defineEmits(['edit']);
 </script>
 
 <template>
@@ -19,7 +20,8 @@ const formatDate = (date) => new Date(date).toLocaleDateString();
                         {{ todo.is_completed ? 'Đã hoàn thành' : 'Chưa hoàn thành' }}
                     </span>
                     <div class="actions">
-                        <button class="btn btn-edit"> <img src="@/assets/images/32-edit-3.svg" alt="Edit"></button>
+                        <button class="btn btn-edit" @click="$emit('edit', todo.id)"> <img
+                                src="@/assets/images/32-edit-3.svg" alt="Edit"></button>
                         <button class="btn btn-delete"><img src="@/assets/images/32-trash-can-3.svg"
                                 alt="Delete"></button>
                     </div>
