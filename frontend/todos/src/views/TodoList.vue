@@ -8,6 +8,7 @@
                         việc</div>
                 </template>
             </page-header>
+            <div class="line"> </div>
             <todo-list :todos="todos" @edit="handleEdit" @delete="handleDelete" />
         </div>
     </default-layout>
@@ -66,5 +67,11 @@ onMounted(() => {
     font-size: 14px;
     gap: 10px;
     cursor: pointer;
+}
+
+.line {
+    width: 100%;
+    height: 3px;
+    background-color: white;
 }
 </style>

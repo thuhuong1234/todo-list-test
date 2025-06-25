@@ -49,6 +49,7 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: background-color 0.2s;
+            background-color: transparent;
 
             .app-icon {
                 display: flex;

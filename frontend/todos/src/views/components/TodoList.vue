@@ -13,6 +13,10 @@ const emit = defineEmits(['edit', 'delete']);
 
 <template>
     <div class="todo-list">
+        <div v-if="todos.length === 0" class="empty-message">
+            <img width="50px" src="@/assets/images/process.svg" alt="Empty" class="empty-img" />
+            <p>Chưa có công việc nào. Hãy thêm mới!</p>
+        </div>
         <div class="todo-grid">
             <div v-for="todo in todos" :key="todo.id" class="todo-card" :class="{ done: todo.is_completed }">
                 <div class="todo-header">
@@ -26,13 +30,15 @@ const emit = defineEmits(['edit', 'delete']);
                             <img src=" @/assets/images/32-trash-can-3.svg" alt="Delete"></button>
                     </div>
                 </div>
-                <p class="title" :class="{ completed: todo.is_completed, pending: !todo.is_completed }">Công việc: {{
-                    todo.title ||
-                    'Không có mô tả' }}</p>
+                <p class="title" :class="{ completed: todo.is_completed, pending: !todo.is_completed }">Công việc:
+                    {{
+                        todo.title ||
+                        'Không có mô tả' }}</p>
                 <p class="description">{{ todo.description || 'Không có mô tả' }}</p>
                 <div class="dates">
-                    <p class="due-date" :class="{ completed: todo.is_completed, pending: !todo.is_completed }">Hạn: {{
-                        formatDate(todo.due_date) }}</p>
+                    <p class="due-date" :class="{ completed: todo.is_completed, pending: !todo.is_completed }">Hạn:
+                        {{
+                            formatDate(todo.due_date) }}</p>
                     <p class="updated-at">
                         Cập nhật: {{ formatDate(todo.updated_at) }}
                     </p>
@@ -53,6 +59,24 @@ const emit = defineEmits(['edit', 'delete']);
         font-weight: 700;
         margin-bottom: 1.5rem;
         color: #003DA1;
+    }
+
+    .empty-message {
+        text-align: center;
+        padding: 50px 20px;
+        color: white;
+
+        p {
+            font-size: 20px;
+            margin-top: 16px;
+            color: white;
+        }
+
+        .empty-img {
+            width: 160px;
+            opacity: 0.7;
+            color: white;
+        }
     }
 
     .todo-grid {
