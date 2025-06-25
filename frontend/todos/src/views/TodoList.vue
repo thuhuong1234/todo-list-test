@@ -9,7 +9,18 @@
                 </template>
             </page-header>
             <div class="line"> </div>
+            <div class="toolbar">
+                <div class="search-bar"> <img width="20px" src="@/assets/images/32-zoom-3.svg" alt="Search">
+                    <input type="text" v-model="search" @keyup.enter="page = 1; getTodos()" placeholder="Tìm kiếm..." />
+                </div>
+
+            </div>
             <todo-list :todos="todos" @edit="handleEdit" @delete="handleDelete" />
+            <div class="pagination">
+                <button :disabled="page === 1" @click="page--; getTodos()">«</button>
+                <span>Trang {{ page }} / {{ totalPages }}</span>
+                <button :disabled="page >= totalPages" @click="page++; getTodos()">»</button>
+            </div>
         </div>
     </default-layout>
 </template>
@@ -18,7 +29,7 @@
 import DefaultLayout from '@/DefaultLayout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import TodoList from '@/views/components/TodoList.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import axios from '@/configs/axios';
 import { useRouter } from 'vue-router';
 import { showToast, showConfirmDialog } from '@/helpers/sweetalertHelper.js';
@@ -26,10 +37,22 @@ import { showToast, showConfirmDialog } from '@/helpers/sweetalertHelper.js';
 const router = useRouter();
 
 const todos = ref([]);
+const total = ref(0);
+const page = ref(1);
+const limit = ref(6);
+const search = ref("");
+const totalPages = computed(() => Math.ceil(total.value / limit.value));
 const getTodos = async () => {
     try {
-        const response = await axios.get("/todos");
+        const response = await axios.get("/todos", {
+            params: {
+                page: page.value,
+                limit: limit.value,
+                search: search.value
+            }
+        });
         todos.value = response.data.todos;
+        total.value = response.data.total;
     } catch (error) {
         console.error("Lỗi:", error);
     }
@@ -48,6 +71,9 @@ const handleDelete = async (id) => {
         console.error("Lỗi:", error);
     }
 }
+watch([page, limit], () => {
+    getTodos();
+});
 onMounted(() => {
     getTodos();
 })
@@ -73,5 +99,51 @@ onMounted(() => {
     width: 100%;
     height: 3px;
     background-color: white;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+
+    button {
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: white;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    span {
+        color: white;
+        font-weight: bold;
+    }
+}
+
+.toolbar {
+    padding: 10px 40px;
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #FFFFFF;
+        border-radius: 6px;
+        max-width: 300px;
+        padding: 2px 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+    }
 }
 </style>
