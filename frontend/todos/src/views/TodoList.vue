@@ -167,5 +167,24 @@ onMounted(() => {
         border: none;
         border-radius: 6px;
     }
+
+}
+
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 40px;
+
+        .search-bar {
+            max-width: none;
+        }
+
+        select {
+            width: 50%;
+        }
+    }
+
 }
 </style>

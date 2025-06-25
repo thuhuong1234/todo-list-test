@@ -158,5 +158,23 @@ const { value: isCompleted } = useField('is_completed');
             }
         }
     }
+
+    @media (max-width: 768px) {
+        padding: 16px;
+        margin: 16px;
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            align-items: stretch;
+
+            .btn {
+                width: 100%;
+            }
+        }
+    }
 }
 </style>
