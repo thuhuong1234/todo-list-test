@@ -21,11 +21,11 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/backend-todos:latest
-    pull-and-run:
-      name: Pull and run image
-      needs: build-and-push
-      runs-on: ubuntu-latest
-      steps:
+  pull-and-run:
+    name: Pull and run image
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
@@ -33,6 +33,12 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
+            CONTAINER=$(docker ps -q --filter "publish=8080")
+            if [ ! -z "$CONTAINER" ]; then
+              echo "Stopping container using port 8080: $CONTAINER"
+              docker stop $CONTAINER
+              docker rm $CONTAINER
+            fi
             docker pull ${{ secrets.DOCKER_USERNAME }}/backend-todos
             docker stop backend-todos || true
             docker rm backend-todos || true
