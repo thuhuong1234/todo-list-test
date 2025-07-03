@@ -1,7 +1,9 @@
 # Build stage
 FROM node:18-alpine AS builder
 WORKDIR /app
+ARG VITE_API_BASE_URL
 COPY . .
+RUN echo "VITE_API_BASE_URL=$VITE_API_BASE_URL" > .env
 RUN npm install
 RUN npm run build
 

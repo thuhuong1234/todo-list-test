@@ -18,6 +18,9 @@ jobs:
         run: |
           cd frontend/todos
           docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-todos .
+          docker build \
+            --build-arg VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }} \
+            -t ${{ secrets.DOCKER_USERNAME }}/frontend-todos .
           
       - name: Push Frontend
         run: |

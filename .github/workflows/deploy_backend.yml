@@ -33,6 +33,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
+            echo "${{ secrets.BACKEND_ENV_FILE }}" > .env
             CONTAINER=$(docker ps -q --filter "publish=8080")
             if [ ! -z "$CONTAINER" ]; then
               echo "Stopping container using port 8080: $CONTAINER"
