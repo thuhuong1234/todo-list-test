@@ -3,7 +3,7 @@ name: Deploy Frontend
 on:
   push:
     paths:
-      - "frontend/**"
+      - "frontend todos/**"
     branches:
       - feature/todo-app
 
