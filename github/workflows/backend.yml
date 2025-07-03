@@ -1,0 +1,39 @@
+name: Deploy Backend
+
+on:
+  push:
+    paths:
+      - "backend/**" # Chỉ chạy khi backend thay đổi
+    branches:
+      - feature/todo-app
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build BE image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-todos ./backend
+
+      - name: Push image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend-todos:latest
+    pull-and-run:
+      name: Pull and run image
+      needs: build-and-push
+      runs-on: ubuntu-latest
+      steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/backend-todos
+            docker stop backend-todos || true
+            docker rm backend-todos || true
+            docker run --env-file .env -p 8080:3001 -d ${{ secrets.DOCKER_USERNAME }}/backend-todos
