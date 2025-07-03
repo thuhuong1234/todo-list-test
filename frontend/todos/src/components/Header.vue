@@ -33,7 +33,7 @@
 
     .app-menu {
         display: flex;
-        gap: 50px;
+        gap: 55px;
     }
 
     .app-options {
