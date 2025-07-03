@@ -11,4 +11,11 @@ export default defineConfig({
     },
   },
   assetsInclude: ["**/*.ttf", "**/*.woff", "**/*.woff2", "**/*.eot"],
+  server: {
+    host: true, 
+  },
+   build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
 });

@@ -3,7 +3,7 @@ name: Deploy Backend
 on:
   push:
     paths:
-      - "backend/**" # Chỉ chạy khi backend thay đổi
+      - "backend/**"
     branches:
       - feature/todo-app
 
