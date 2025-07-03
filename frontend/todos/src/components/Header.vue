@@ -15,7 +15,7 @@
                 <button class="btn-icon"> <img class="app-icon" width="20px" height="20px"
                         src="@/assets/images/32-cogwheel-3.svg" alt="Setting"> </button>
                 <img class="avatar-account" width="40px" height="40px" src="@/assets/images/default-avatar.jpeg"
-                    alt="Account">
+                    alt="Avatar Account">
             </div>
         </div>
     </header>
